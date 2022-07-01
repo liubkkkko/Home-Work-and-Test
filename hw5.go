@@ -1,42 +1,64 @@
 package main
 
 import (
-  "fmt"
-  // "strconv"
+	"fmt"
+	"strconv"
+	// "strconv"
 )
 
 type numbers struct {
-  number string
-  index  int
+	number string
+	index  int
 }
 
 func main() {
-  str := "123456789"
-  number := 2
-  input := numbers{str, number}
-  numbersArr := input.addToSlice()
-  numberOfDigits := len(str) - number
-  fmt.Println("gluin", gluin(numberOfDigits, numbersArr))
-//   a := numbersArr[0:3]
-// //   firstNumbers := a[0]+a[1]+a[2]
-// //   fmt.Println(firstNumbers)
+	str := "1234"
+	number := 1
+	input := numbers{str, number}
+	numbersArr := input.addToSlice()
+	numberOfDigits := len(str) - number //розрядність найбільшого можливого числа
+	resoultArr := gluinNumbers(numberOfDigits, numbersArr)
+	fmt.Println(findMax(resoultArr))
+}
+func findMax(resoultArr []string) int {
+	var maxValue int
+	for _, k := range resoultArr {
+		value, _ := strconv.Atoi(k)
+		if maxValue < value {
+			maxValue = value
+		}
+	}
+	return maxValue
 }
 
-func (n numbers) addToSlice() []string {
-  fmt.Println("Input number", n.number)
-  numbersArr := make([]string, 0)
-  for i := 0; i < len(n.number); i++ {
-    stringValue := string(n.number[i])
-    numbersArr = append(numbersArr, string(stringValue))
-  }
-  fmt.Println(numbersArr)
+func (n numbers) addToSlice() []string { //метод який додає всі цифри до слайсу
+	fmt.Println("Input number", n.number)
+	numbersArr := make([]string, 0, 12)
+	for i := 0; i < len(n.number); i++ {
+		stringValue := string(n.number[i])
+		numbersArr = append(numbersArr, string(stringValue))
+	}
+	fmt.Println(numbersArr)
+	return numbersArr
+}
 
-  return numbersArr
-}
-func  gluin(numberOfDigits int, a []string) string { //метод який складає слайс в один рядок
-  var s string
-  for i := 0; i < numberOfDigits; i++ {
-    s+=a[i]
-}
-return s
+func gluinNumbers(numberOfDigits int, numbersArr []string) []string { //функція яка складає слайс в один рядок і повертає масив найбільших значень
+	var s string
+	resoultArr := make([]string, 0, 4)
+	forCounter := 0
+	for j := 0; j < len(numbersArr); j++ {
+		for i := forCounter; i < numberOfDigits; i++ {
+			s += numbersArr[i]
+		}
+		if numberOfDigits < len(numbersArr) {
+			resoultArr = append(resoultArr, s)
+			s = ""
+			numberOfDigits++
+			forCounter++
+		} else {
+			break
+		}
+	}
+	resoultArr = append(resoultArr, s)
+	return resoultArr
 }
