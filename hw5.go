@@ -15,7 +15,7 @@ func main() {
 	str := "1234"
 	number := 1
 	input := numbers{str, number}
-	numbersArr := input.addToSlice()
+	numbersArr := input.addToSlice()//записуємо рядок в слайс
 	numberOfDigits := len(str) - number //розрядність найбільшого можливого числа
 	resoultArr := gluinNumbers(numberOfDigits, numbersArr)
 	fmt.Println(findMax(resoultArr))
